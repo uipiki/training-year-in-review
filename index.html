@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Training Year in Review</title>
+  <style>
+    :root {
+      --bg: #0b0b0b;
+      --bg-2: #171717;
+      --glow: #ffae00;
+      --accent: #ff4d6d;
+      --accent-2: #00d1b2;
+      --text: #f8f6f0;
+      --muted: #b9b4a8;
+      --card: rgba(255, 255, 255, 0.06);
+      --line: rgba(255, 255, 255, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Gill Sans", "Trebuchet MS", sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at 10% 20%, rgba(255, 174, 0, 0.2), transparent 40%),
+        radial-gradient(circle at 90% 10%, rgba(0, 209, 178, 0.25), transparent 45%),
+        linear-gradient(140deg, #090909 0%, #161313 40%, #0f1617 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: -10% -10% auto auto;
+      width: 40vw;
+      height: 40vw;
+      background: conic-gradient(from 180deg, rgba(255, 77, 109, 0.2), transparent 65%);
+      filter: blur(60px);
+      opacity: 0.8;
+      z-index: -1;
+    }
+
+    body::after {
+      inset: auto auto -20% -10%;
+      width: 50vw;
+      height: 50vw;
+      background: radial-gradient(circle, rgba(0, 209, 178, 0.2), transparent 60%);
+      filter: blur(80px);
+    }
+
+    .page {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .hero {
+      display: grid;
+      gap: 24px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 32px;
+    }
+
+    .hero-badge {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5em;
+      color: var(--muted);
+    }
+
+    h1,
+    h2,
+    .big-number {
+      font-family: "Impact", "Haettenschweiler", "Franklin Gothic Heavy", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: clamp(36px, 8vw, 80px);
+      line-height: 0.95;
+    }
+
+    h2 {
+      font-size: clamp(22px, 4vw, 36px);
+      margin-bottom: 16px;
+    }
+
+    .hero-meta {
+      color: var(--muted);
+      font-size: 14px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px 20px;
+      backdrop-filter: blur(8px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 18px;
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0.12), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .card:hover::after {
+      opacity: 1;
+    }
+
+    .big-number {
+      font-size: clamp(26px, 4vw, 44px);
+      margin-bottom: 6px;
+      color: var(--glow);
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .section {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px;
+    }
+
+    .list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .pill {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255, 174, 0, 0.15);
+      color: var(--glow);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+    }
+
+    .bars {
+      display: grid;
+      gap: 12px;
+    }
+
+    .bar {
+      display: grid;
+      gap: 6px;
+    }
+
+    .bar-track {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--glow));
+    }
+
+    .bar-fill.alt {
+      background: linear-gradient(90deg, var(--accent-2), var(--glow));
+    }
+
+    .highlight-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .note {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-top: 32px;
+    }
+
+    .animate {
+      animation: rise 0.9s ease both;
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .hero {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-badge">Training Year in Review</div>
+      <h1>Year in Review 2025</h1>
+      <div class="hero-meta">2/10 - 12/27 / 187 days</div>
+      <div class="hero-stats">
+        <div class="card animate">
+          <div class="big-number">187</div>
+          <div class="label">Training Days</div>
+        </div>
+        <div class="card animate" style="animation-delay: 0.1s;">
+          <div class="big-number">3,990</div>
+          <div class="label">Total Sets</div>
+        </div>
+        <div class="card animate" style="animation-delay: 0.2s;">
+          <div class="big-number">1.2M</div>
+          <div class="label">Total Volume (kg)</div>
+        </div>
+      </div>
+    </header>
+
+    <section class="section">
+      <h2>By the Numbers</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="big-number">35,669</div>
+          <div class="label">Total Reps</div>
+        </div>
+        <div class="card">
+          <div class="big-number">8.1</div>
+          <div class="label">Total KM</div>
+        </div>
+        <div class="card">
+          <div class="big-number">21.34</div>
+          <div class="label">Avg Sets/Day</div>
+        </div>
+        <div class="card">
+          <div class="big-number">8</div>
+          <div class="label">Longest Streak</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Top Moves</h2>
+      <ol class="list">
+        <li><span>1. レッグプレス</span><span class="pill">209.6K</span></li><li><span>2. ラットプルダウン</span><span class="pill">115.0K</span></li><li><span>3. ベンチプレス</span><span class="pill">110.9K</span></li><li><span>4. スクワット</span><span class="pill">98.4K</span></li><li><span>5. レッグカール</span><span class="pill">43.6K</span></li><li><span>6. レッグエクステンション</span><span class="pill">39.6K</span></li>
+      </ol>
+    </section>
+
+    <section class="section">
+      <h2>Body Focus</h2>
+      <div class="bars">
+        <div class="bar"><div class="note">脚</div><div class="bar-track"><div class="bar-fill " style="width:100.00%"></div></div></div><div class="bar"><div class="note">胸</div><div class="bar-track"><div class="bar-fill alt" style="width:59.58%"></div></div></div><div class="bar"><div class="note">背</div><div class="bar-track"><div class="bar-fill " style="width:53.85%"></div></div></div><div class="bar"><div class="note">肩</div><div class="bar-track"><div class="bar-fill alt" style="width:27.70%"></div></div></div><div class="bar"><div class="note">腕</div><div class="bar-track"><div class="bar-fill " style="width:15.02%"></div></div></div><div class="bar"><div class="note">その他</div><div class="bar-track"><div class="bar-fill alt" style="width:8.00%"></div></div></div><div class="bar"><div class="note">腹</div><div class="bar-track"><div class="bar-fill " style="width:8.00%"></div></div></div><div class="bar"><div class="note">走</div><div class="bar-track"><div class="bar-fill alt" style="width:8.00%"></div></div></div><div class="bar"><div class="note">体幹</div><div class="bar-track"><div class="bar-fill " style="width:8.00%"></div></div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Monthly Pulse</h2>
+      <div class="bars">
+        <div class="bar"><div class="note">2月 16 days</div><div class="bar-track"><div class="bar-fill " style="width:76.19%"></div></div></div><div class="bar"><div class="note">3月 20 days</div><div class="bar-track"><div class="bar-fill alt" style="width:95.24%"></div></div></div><div class="bar"><div class="note">4月 15 days</div><div class="bar-track"><div class="bar-fill " style="width:71.43%"></div></div></div><div class="bar"><div class="note">5月 17 days</div><div class="bar-track"><div class="bar-fill alt" style="width:80.95%"></div></div></div><div class="bar"><div class="note">6月 21 days</div><div class="bar-track"><div class="bar-fill " style="width:100.00%"></div></div></div><div class="bar"><div class="note">7月 18 days</div><div class="bar-track"><div class="bar-fill alt" style="width:85.71%"></div></div></div><div class="bar"><div class="note">8月 16 days</div><div class="bar-track"><div class="bar-fill " style="width:76.19%"></div></div></div><div class="bar"><div class="note">9月 17 days</div><div class="bar-track"><div class="bar-fill alt" style="width:80.95%"></div></div></div><div class="bar"><div class="note">10月 18 days</div><div class="bar-track"><div class="bar-fill " style="width:85.71%"></div></div></div><div class="bar"><div class="note">11月 14 days</div><div class="bar-track"><div class="bar-fill alt" style="width:66.67%"></div></div></div><div class="bar"><div class="note">12月 15 days</div><div class="bar-track"><div class="bar-fill " style="width:71.43%"></div></div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Highlights</h2>
+      <div class="highlight-grid">
+        <div class="card animate">
+          <div class="label">Top Move</div>
+          <div class="big-number">レッグプレス</div>
+          <div class="note">Volume 209.6K kg</div>
+        </div>
+        <div class="card animate" style="animation-delay: 0.1s;">
+          <div class="label">Peak Month</div>
+          <div class="big-number">6月</div>
+          <div class="note">21 days</div>
+        </div>
+        <div class="card animate" style="animation-delay: 0.2s;">
+          <div class="label">Gym Days</div>
+          <div class="big-number">163</div>
+          <div class="note">Gym visits</div>
+        </div>
+        <div class="card animate" style="animation-delay: 0.3s;">
+          <div class="label">Total Distance</div>
+          <div class="big-number">8.1</div>
+          <div class="note">km logged</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">Made from training_log.csv</div>
+  </div>
+</body>
+</html>
