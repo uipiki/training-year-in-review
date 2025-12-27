@@ -3,349 +3,796 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Training Year in Review</title>
+  <title>Training Year in Review 2025</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0b0b0b;
-      --bg-2: #171717;
-      --glow: #ffae00;
+      --bg: #050505;
+      --glow-primary: #ff6b35;
+      --glow-secondary: #00d4aa;
+      --glow-tertiary: #7c3aed;
       --accent: #ff4d6d;
-      --accent-2: #00d1b2;
-      --text: #f8f6f0;
-      --muted: #b9b4a8;
-      --card: rgba(255, 255, 255, 0.06);
-      --line: rgba(255, 255, 255, 0.1);
+      --text: #ffffff;
+      --text-muted: #8b8b8b;
+      --card-bg: rgba(255, 255, 255, 0.03);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --glass: rgba(255, 255, 255, 0.05);
     }
 
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      margin: 0;
-      font-family: "Gill Sans", "Trebuchet MS", sans-serif;
+      font-family: 'Inter', -apple-system, sans-serif;
       color: var(--text);
-      background: radial-gradient(circle at 10% 20%, rgba(255, 174, 0, 0.2), transparent 40%),
-        radial-gradient(circle at 90% 10%, rgba(0, 209, 178, 0.25), transparent 45%),
-        linear-gradient(140deg, #090909 0%, #161313 40%, #0f1617 100%);
+      background: var(--bg);
       min-height: 100vh;
       overflow-x: hidden;
     }
 
-    body::before,
-    body::after {
-      content: "";
+    /* Ambient background */
+    .ambient {
       position: fixed;
-      inset: -10% -10% auto auto;
-      width: 40vw;
-      height: 40vw;
-      background: conic-gradient(from 180deg, rgba(255, 77, 109, 0.2), transparent 65%);
-      filter: blur(60px);
-      opacity: 0.8;
+      inset: 0;
       z-index: -1;
+      overflow: hidden;
     }
 
-    body::after {
-      inset: auto auto -20% -10%;
-      width: 50vw;
-      height: 50vw;
-      background: radial-gradient(circle, rgba(0, 209, 178, 0.2), transparent 60%);
-      filter: blur(80px);
+    .ambient-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.4;
+      animation: float 20s ease-in-out infinite;
+    }
+
+    .ambient-orb:nth-child(1) {
+      width: 600px;
+      height: 600px;
+      background: var(--glow-primary);
+      top: -200px;
+      right: -100px;
+    }
+
+    .ambient-orb:nth-child(2) {
+      width: 500px;
+      height: 500px;
+      background: var(--glow-secondary);
+      bottom: -150px;
+      left: -100px;
+      animation-delay: -10s;
+    }
+
+    .ambient-orb:nth-child(3) {
+      width: 400px;
+      height: 400px;
+      background: var(--glow-tertiary);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation-delay: -5s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -30px) scale(1.1); }
+      66% { transform: translate(-20px, 20px) scale(0.9); }
+    }
+
+    /* Noise texture overlay */
+    .noise {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
     }
 
     .page {
-      max-width: 1120px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 40px 24px 80px;
+      padding: 60px 24px 100px;
       display: flex;
       flex-direction: column;
-      gap: 48px;
+      gap: 80px;
     }
 
+    /* Hero Section */
     .hero {
-      display: grid;
-      gap: 24px;
-      border-bottom: 1px solid var(--line);
-      padding-bottom: 32px;
+      text-align: center;
+      padding: 60px 0 80px;
+      position: relative;
     }
 
     .hero-badge {
-      font-size: 12px;
+      display: inline-block;
+      padding: 8px 20px;
+      border-radius: 100px;
+      background: linear-gradient(135deg, var(--glow-primary), var(--glow-secondary));
+      font-size: 11px;
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.5em;
-      color: var(--muted);
+      letter-spacing: 0.2em;
+      margin-bottom: 32px;
     }
 
-    h1,
-    h2,
-    .big-number {
-      font-family: "Impact", "Haettenschweiler", "Franklin Gothic Heavy", sans-serif;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin: 0;
+    .hero-title {
+      font-size: clamp(48px, 12vw, 140px);
+      font-weight: 900;
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #fff 0%, #fff 50%, var(--glow-secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 24px;
     }
 
-    h1 {
-      font-size: clamp(36px, 8vw, 80px);
-      line-height: 0.95;
-    }
-
-    h2 {
-      font-size: clamp(22px, 4vw, 36px);
-      margin-bottom: 16px;
-    }
-
-    .hero-meta {
-      color: var(--muted);
-      font-size: 14px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+    .hero-subtitle {
+      font-size: 18px;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
     }
 
     .hero-stats {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 60px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @media (max-width: 700px) {
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero-stat {
+      position: relative;
+      padding: 40px 24px;
+      border-radius: 24px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(20px);
+      overflow: hidden;
+    }
+
+    .hero-stat::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--glow-primary), transparent);
+    }
+
+    .hero-stat-number {
+      font-size: clamp(40px, 8vw, 64px);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, var(--glow-primary), var(--glow-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-top: 8px;
+    }
+
+    /* Section Headers */
+    .section {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
       gap: 16px;
     }
 
-    .card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 18px 20px;
-      backdrop-filter: blur(8px);
+    .section-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      background: linear-gradient(135deg, var(--glow-primary), var(--glow-secondary));
+    }
+
+    .section-title {
+      font-size: clamp(28px, 5vw, 40px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+    }
+
+    .stat-card {
+      padding: 28px 24px;
+      border-radius: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(20px);
+      transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
     }
 
-    .card::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: 18px;
-      background: linear-gradient(120deg, rgba(255, 255, 255, 0.12), transparent 60%);
-      opacity: 0;
-      transition: opacity 0.4s ease;
+    .stat-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     }
 
-    .card:hover::after {
+    .stat-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .stat-card:hover::after {
       opacity: 1;
     }
 
-    .big-number {
-      font-size: clamp(26px, 4vw, 44px);
-      margin-bottom: 6px;
-      color: var(--glow);
+    .stat-number {
+      font-size: 36px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: var(--text);
     }
 
-    .label {
-      color: var(--muted);
-      font-size: 13px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-
-    .section {
-      display: grid;
-      gap: 16px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 14px;
-    }
-
-    .list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: grid;
-      gap: 10px;
-    }
-
-    .list li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 14px;
-      border-radius: 14px;
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-    }
-
-    .pill {
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(255, 174, 0, 0.15);
-      color: var(--glow);
+    .stat-label {
       font-size: 12px;
-      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-top: 6px;
     }
 
-    .bars {
-      display: grid;
+    /* Ranking List */
+    .ranking {
+      display: flex;
+      flex-direction: column;
       gap: 12px;
     }
 
-    .bar {
-      display: grid;
-      gap: 6px;
+    .rank-item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 20px 24px;
+      border-radius: 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(20px);
+      transition: all 0.3s ease;
+    }
+
+    .rank-item:hover {
+      background: rgba(255, 255, 255, 0.06);
+      transform: translateX(8px);
+    }
+
+    .rank-position {
+      font-size: 32px;
+      font-weight: 900;
+      min-width: 50px;
+      background: linear-gradient(135deg, var(--glow-primary), var(--glow-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .rank-name {
+      flex: 1;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .rank-value {
+      font-size: 16px;
+      font-weight: 800;
+      padding: 8px 16px;
+      border-radius: 100px;
+      background: rgba(255, 107, 53, 0.15);
+      color: var(--glow-primary);
+    }
+
+    /* Progress Bars */
+    .bars-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .bar-item {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .bar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .bar-label {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .bar-value {
+      font-size: 14px;
+      color: var(--text-muted);
     }
 
     .bar-track {
-      height: 10px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.1);
+      height: 12px;
+      border-radius: 100px;
+      background: rgba(255, 255, 255, 0.08);
       overflow: hidden;
     }
 
     .bar-fill {
       height: 100%;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--accent), var(--glow));
+      border-radius: 100px;
+      background: linear-gradient(90deg, var(--glow-primary), var(--glow-secondary));
+      position: relative;
+      transition: width 1s ease-out;
     }
 
-    .bar-fill.alt {
-      background: linear-gradient(90deg, var(--accent-2), var(--glow));
+    .bar-fill::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      animation: shimmer 2s infinite;
     }
 
-    .highlight-grid {
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* Monthly Chart */
+    .monthly-chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      height: 200px;
+      padding: 24px;
+      border-radius: 24px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+    }
+
+    .month-bar {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      height: 100%;
+      justify-content: flex-end;
+    }
+
+    .month-bar-fill {
+      width: 100%;
+      border-radius: 8px 8px 4px 4px;
+      background: linear-gradient(180deg, var(--glow-primary), var(--glow-tertiary));
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 8px;
+      font-size: 12px;
+      font-weight: 800;
+      transition: height 1s ease-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .month-bar-fill::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.2), transparent);
+    }
+
+    .month-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* Highlights */
+    .highlights-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
     }
 
-    .note {
-      font-size: 13px;
-      color: var(--muted);
-      letter-spacing: 0.08em;
+    .highlight-card {
+      padding: 32px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(255,107,53,0.1), rgba(0,212,170,0.1));
+      border: 1px solid var(--card-border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .highlight-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--glow-primary), var(--glow-secondary));
+    }
+
+    .highlight-label {
+      font-size: 11px;
+      color: var(--text-muted);
       text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 12px;
     }
 
+    .highlight-value {
+      font-size: clamp(32px, 6vw, 48px);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .highlight-note {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    /* Footer */
     .footer {
       text-align: center;
-      color: var(--muted);
+      padding-top: 40px;
+      border-top: 1px solid var(--card-border);
+    }
+
+    .footer-text {
       font-size: 12px;
-      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      margin-top: 32px;
     }
 
-    .animate {
-      animation: rise 0.9s ease both;
+    .footer-emoji {
+      font-size: 32px;
+      margin-bottom: 16px;
     }
 
-    @keyframes rise {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    /* Scroll animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
     }
 
-    @media (max-width: 700px) {
-      .hero {
-        text-align: left;
-      }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
   </style>
 </head>
 <body>
+  <div class="ambient">
+    <div class="ambient-orb"></div>
+    <div class="ambient-orb"></div>
+    <div class="ambient-orb"></div>
+  </div>
+  <div class="noise"></div>
+
   <div class="page">
-    <header class="hero">
-      <div class="hero-badge">Training Year in Review</div>
-      <h1>Year in Review 2025</h1>
-      <div class="hero-meta">2/10 - 12/27 / 187 days</div>
+    <!-- Hero -->
+    <header class="hero reveal">
+      <div class="hero-badge">Year in Review</div>
+      <h1 class="hero-title">2025</h1>
+      <p class="hero-subtitle">2/10 - 12/27 Training Log</p>
+
       <div class="hero-stats">
-        <div class="card animate">
-          <div class="big-number">187</div>
-          <div class="label">Training Days</div>
+        <div class="hero-stat">
+          <div class="hero-stat-number">187</div>
+          <div class="hero-stat-label">トレーニング日数</div>
         </div>
-        <div class="card animate" style="animation-delay: 0.1s;">
-          <div class="big-number">3,990</div>
-          <div class="label">Total Sets</div>
+        <div class="hero-stat">
+          <div class="hero-stat-number">1.23M</div>
+          <div class="hero-stat-label">総ボリューム (kg)</div>
         </div>
-        <div class="card animate" style="animation-delay: 0.2s;">
-          <div class="big-number">1.2M</div>
-          <div class="label">Total Volume (kg)</div>
+        <div class="hero-stat">
+          <div class="hero-stat-number">35,579</div>
+          <div class="hero-stat-label">総レップ数</div>
         </div>
       </div>
     </header>
 
-    <section class="section">
-      <h2>By the Numbers</h2>
-      <div class="grid">
-        <div class="card">
-          <div class="big-number">35,669</div>
-          <div class="label">Total Reps</div>
+    <!-- By the Numbers -->
+    <section class="section reveal">
+      <div class="section-header">
+        <div class="section-icon">📊</div>
+        <h2 class="section-title">数字で振り返る</h2>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">163</div>
+          <div class="stat-label">ジム訪問日数</div>
         </div>
-        <div class="card">
-          <div class="big-number">8.1</div>
-          <div class="label">Total KM</div>
+        <div class="stat-card">
+          <div class="stat-number">8</div>
+          <div class="stat-label">最長連続日数</div>
         </div>
-        <div class="card">
-          <div class="big-number">21.34</div>
-          <div class="label">Avg Sets/Day</div>
+        <div class="stat-card">
+          <div class="stat-number">21.3</div>
+          <div class="stat-label">1日平均セット数</div>
         </div>
-        <div class="card">
-          <div class="big-number">8</div>
-          <div class="label">Longest Streak</div>
+        <div class="stat-card">
+          <div class="stat-number">8.1 km</div>
+          <div class="stat-label">総走行距離</div>
         </div>
       </div>
     </section>
 
-    <section class="section">
-      <h2>Top Moves</h2>
-      <ol class="list">
-        <li><span>1. レッグプレス</span><span class="pill">209.6K</span></li><li><span>2. ラットプルダウン</span><span class="pill">115.0K</span></li><li><span>3. ベンチプレス</span><span class="pill">110.9K</span></li><li><span>4. スクワット</span><span class="pill">98.4K</span></li><li><span>5. レッグカール</span><span class="pill">43.6K</span></li><li><span>6. レッグエクステンション</span><span class="pill">39.6K</span></li>
-      </ol>
-    </section>
-
-    <section class="section">
-      <h2>Body Focus</h2>
-      <div class="bars">
-        <div class="bar"><div class="note">脚</div><div class="bar-track"><div class="bar-fill " style="width:100.00%"></div></div></div><div class="bar"><div class="note">胸</div><div class="bar-track"><div class="bar-fill alt" style="width:59.58%"></div></div></div><div class="bar"><div class="note">背</div><div class="bar-track"><div class="bar-fill " style="width:53.85%"></div></div></div><div class="bar"><div class="note">肩</div><div class="bar-track"><div class="bar-fill alt" style="width:27.70%"></div></div></div><div class="bar"><div class="note">腕</div><div class="bar-track"><div class="bar-fill " style="width:15.02%"></div></div></div><div class="bar"><div class="note">その他</div><div class="bar-track"><div class="bar-fill alt" style="width:8.00%"></div></div></div><div class="bar"><div class="note">腹</div><div class="bar-track"><div class="bar-fill " style="width:8.00%"></div></div></div><div class="bar"><div class="note">走</div><div class="bar-track"><div class="bar-fill alt" style="width:8.00%"></div></div></div><div class="bar"><div class="note">体幹</div><div class="bar-track"><div class="bar-fill " style="width:8.00%"></div></div></div>
+    <!-- Top Exercises -->
+    <section class="section reveal">
+      <div class="section-header">
+        <div class="section-icon">🏆</div>
+        <h2 class="section-title">よくやった種目</h2>
       </div>
-    </section>
-
-    <section class="section">
-      <h2>Monthly Pulse</h2>
-      <div class="bars">
-        <div class="bar"><div class="note">2月 16 days</div><div class="bar-track"><div class="bar-fill " style="width:76.19%"></div></div></div><div class="bar"><div class="note">3月 20 days</div><div class="bar-track"><div class="bar-fill alt" style="width:95.24%"></div></div></div><div class="bar"><div class="note">4月 15 days</div><div class="bar-track"><div class="bar-fill " style="width:71.43%"></div></div></div><div class="bar"><div class="note">5月 17 days</div><div class="bar-track"><div class="bar-fill alt" style="width:80.95%"></div></div></div><div class="bar"><div class="note">6月 21 days</div><div class="bar-track"><div class="bar-fill " style="width:100.00%"></div></div></div><div class="bar"><div class="note">7月 18 days</div><div class="bar-track"><div class="bar-fill alt" style="width:85.71%"></div></div></div><div class="bar"><div class="note">8月 16 days</div><div class="bar-track"><div class="bar-fill " style="width:76.19%"></div></div></div><div class="bar"><div class="note">9月 17 days</div><div class="bar-track"><div class="bar-fill alt" style="width:80.95%"></div></div></div><div class="bar"><div class="note">10月 18 days</div><div class="bar-track"><div class="bar-fill " style="width:85.71%"></div></div></div><div class="bar"><div class="note">11月 14 days</div><div class="bar-track"><div class="bar-fill alt" style="width:66.67%"></div></div></div><div class="bar"><div class="note">12月 15 days</div><div class="bar-track"><div class="bar-fill " style="width:71.43%"></div></div></div>
-      </div>
-    </section>
-
-    <section class="section">
-      <h2>Highlights</h2>
-      <div class="highlight-grid">
-        <div class="card animate">
-          <div class="label">Top Move</div>
-          <div class="big-number">レッグプレス</div>
-          <div class="note">Volume 209.6K kg</div>
+      <div class="ranking">
+        <div class="rank-item">
+          <span class="rank-position">01</span>
+          <span class="rank-name">ベンチプレス</span>
+          <span class="rank-value">271 セット</span>
         </div>
-        <div class="card animate" style="animation-delay: 0.1s;">
-          <div class="label">Peak Month</div>
-          <div class="big-number">6月</div>
-          <div class="note">21 days</div>
+        <div class="rank-item">
+          <span class="rank-position">02</span>
+          <span class="rank-name">スクワット</span>
+          <span class="rank-value">164 セット</span>
         </div>
-        <div class="card animate" style="animation-delay: 0.2s;">
-          <div class="label">Gym Days</div>
-          <div class="big-number">163</div>
-          <div class="note">Gym visits</div>
+        <div class="rank-item">
+          <span class="rank-position">03</span>
+          <span class="rank-name">ラットプルダウン</span>
+          <span class="rank-value">159 セット</span>
         </div>
-        <div class="card animate" style="animation-delay: 0.3s;">
-          <div class="label">Total Distance</div>
-          <div class="big-number">8.1</div>
-          <div class="note">km logged</div>
+        <div class="rank-item">
+          <span class="rank-position">04</span>
+          <span class="rank-name">レッグプレス</span>
+          <span class="rank-value">103 セット</span>
+        </div>
+        <div class="rank-item">
+          <span class="rank-position">05</span>
+          <span class="rank-name">サイドレイズ</span>
+          <span class="rank-value">70 セット</span>
         </div>
       </div>
     </section>
 
-    <div class="footer">Made from training_log.csv</div>
+    <!-- Body Focus -->
+    <section class="section reveal">
+      <div class="section-header">
+        <div class="section-icon">💪</div>
+        <h2 class="section-title">部位別ボリューム</h2>
+      </div>
+      <div class="bars-container">
+        <div class="bar-item">
+          <div class="bar-header">
+            <span class="bar-label">脚</span>
+            <span class="bar-value">481,906 kg</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width: 100%;"></div>
+          </div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-header">
+            <span class="bar-label">胸</span>
+            <span class="bar-value">286,875 kg</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width: 59.5%;"></div>
+          </div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-header">
+            <span class="bar-label">背</span>
+            <span class="bar-value">259,405 kg</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width: 53.8%;"></div>
+          </div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-header">
+            <span class="bar-label">肩</span>
+            <span class="bar-value">133,357 kg</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width: 27.7%;"></div>
+          </div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-header">
+            <span class="bar-label">腕</span>
+            <span class="bar-value">72,265 kg</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width: 15%;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Monthly -->
+    <section class="section reveal">
+      <div class="section-header">
+        <div class="section-icon">📅</div>
+        <h2 class="section-title">月別トレーニング日数</h2>
+      </div>
+      <div class="monthly-chart">
+        <div class="month-bar">
+          <div class="month-bar-fill" style="height: 76%;">16</div>
+          <span class="month-label">2月</span>
+        </div>
+        <div class="month-bar">
+          <div class="month-bar-fill" style="height: 95%;">20</div>
+          <span class="month-label">3月</span>
+        </div>
+        <div class="month-bar">
+          <div class="month-bar-fill" style="height: 71%;">15</div>
+          <span class="month-label">4月</span>
+        </div>
+        <div class="month-bar">
+          <div class="month-bar-fill" style="height: 81%;">17</div>
+          <span class="month-label">5月</span>
+        </div>
+        <div class="month-bar">
+          <div class="month-bar-fill" style="height: 100%;">21</div>
+          <span class="month-label">6月</span>
+        </div>
+        <div class="month-bar">
+          <div class="month-bar-fill" style="height: 86%;">18</div>
+          <span class="month-label">7月</span>
+        </div>
+        <div class="month-bar">
+          <div class="month-bar-fill" style="height: 76%;">16</div>
+          <span class="month-label">8月</span>
+        </div>
+        <div class="month-bar">
+          <div class="month-bar-fill" style="height: 81%;">17</div>
+          <span class="month-label">9月</span>
+        </div>
+        <div class="month-bar">
+          <div class="month-bar-fill" style="height: 86%;">18</div>
+          <span class="month-label">10月</span>
+        </div>
+        <div class="month-bar">
+          <div class="month-bar-fill" style="height: 67%;">14</div>
+          <span class="month-label">11月</span>
+        </div>
+        <div class="month-bar">
+          <div class="month-bar-fill" style="height: 71%;">15</div>
+          <span class="month-label">12月</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Personal Records -->
+    <section class="section reveal">
+      <div class="section-header">
+        <div class="section-icon">🥇</div>
+        <h2 class="section-title">自己ベスト</h2>
+      </div>
+      <div class="highlights-grid">
+        <div class="highlight-card">
+          <div class="highlight-label">レッグプレス</div>
+          <div class="highlight-value">193 kg</div>
+          <div class="highlight-note">最大重量</div>
+        </div>
+        <div class="highlight-card">
+          <div class="highlight-label">ベンチプレス</div>
+          <div class="highlight-value">90 kg</div>
+          <div class="highlight-note">最大重量</div>
+        </div>
+        <div class="highlight-card">
+          <div class="highlight-label">スクワット</div>
+          <div class="highlight-value">80 kg</div>
+          <div class="highlight-note">最大重量</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Highlights -->
+    <section class="section reveal">
+      <div class="section-header">
+        <div class="section-icon">✨</div>
+        <h2 class="section-title">ハイライト</h2>
+      </div>
+      <div class="highlights-grid">
+        <div class="highlight-card">
+          <div class="highlight-label">ベストマンス</div>
+          <div class="highlight-value">6月</div>
+          <div class="highlight-note">21日トレーニング</div>
+        </div>
+        <div class="highlight-card">
+          <div class="highlight-label">最もボリュームを稼いだ種目</div>
+          <div class="highlight-value">レッグプレス</div>
+          <div class="highlight-note">209,614 kg</div>
+        </div>
+        <div class="highlight-card">
+          <div class="highlight-label">最も鍛えた部位</div>
+          <div class="highlight-value">脚</div>
+          <div class="highlight-note">481,906 kg</div>
+        </div>
+        <div class="highlight-card">
+          <div class="highlight-label">継続率</div>
+          <div class="highlight-value">51%</div>
+          <div class="highlight-note">年間の半分以上</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer reveal">
+      <div class="footer-emoji">🔥</div>
+      <p class="footer-text">2026年もさらなる高みへ</p>
+    </footer>
   </div>
+
+  <script>
+    // Intersection Observer for scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    document.querySelectorAll('.reveal').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
 </body>
 </html>
